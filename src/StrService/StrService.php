@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Lwq\StrService;
+namespace Curl\StrService;
 
 
 class StrService
@@ -13,6 +13,6 @@ class StrService
     public static function randStr($length = 6){
 
         $strs="QWERTYUIOPASDFGHJKLZXCVBNM1234567890qwertyuiopasdfghjklzxcvbnm";
-        $name=substr(str_shuffle($strs),mt_rand(0,strlen($strs)-$length-1),$length);
+        return substr(str_shuffle($strs),mt_rand(0,strlen($strs)-$length-1),$length);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Lwq\CurlService;
+namespace Curl\CurlService;
 
 
 class CurlService
