@@ -25,8 +25,8 @@ class CurlService
             curl_setopt(self::$curl, CURLOPT_SSL_VERIFYPEER, FALSE);
             curl_setopt(self::$curl, CURLOPT_SSL_VERIFYHOST, FALSE);
         }
+        curl_setopt(self::$curl, CURLOPT_TIMEOUT, 10);
         curl_setopt(self::$curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt(self::$curl, CURLOPT_ENCODING, 'gzip');
         $param[2] = !empty($param[2]) ? $param[2] : ['Content-type:application/json;','Accept:application/json'];
         curl_setopt(self::$curl,CURLOPT_HTTPHEADER,$param[2]);
 
