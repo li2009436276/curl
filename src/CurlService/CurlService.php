@@ -30,7 +30,7 @@ class CurlService
 
         self::getInstance();
 
-        self::$returnType = empty($param[3]) ? 0 : 1;
+        self::$returnType = empty($param[3]) ? 1 : 0;
 
         curl_setopt(self::$curl, CURLOPT_URL, $param[0]);
 
