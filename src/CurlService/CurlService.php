@@ -41,14 +41,18 @@ class CurlService
         }
         curl_setopt(self::$curl, CURLOPT_TIMEOUT, 10);
         curl_setopt(self::$curl, CURLOPT_RETURNTRANSFER, 1);
+        //curl_setopt(self::$curl, CURLOPT_ENCODING, 'gzip,deflate');
         self::$headers = !empty($param[2]) ? $param[2] : ['Content-type:application/json','Accept:application/json'];
-        curl_setopt(self::$curl,CURLOPT_HTTPHEADER,self::$headers);
 
+        curl_setopt(self::$curl,CURLOPT_HTTPHEADER,self::$headers);
+        curl_setopt(self::$curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36');
+        curl_setopt(self::$curl, CURLOPT_COOKIE, 'JSESSIONID=32C404E69090A1C7C484A6A592270AAD.HUIBEServer6; Webtrends=b243387c.5b5ef8e9ac721; gdpr_state=open; _ga=GA1.2.1185675196.1607415379; _gid=GA1.2.1188411127.1607415379; declarehugdpr=agreeusecookie; _gat_TrueMetrics=1; _gat=1');
+        curl_setopt(self::$curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         //添加模拟浏览器cookie
         if (!empty($param[4])) {
 
-            curl_setopt(self::$curl, CURLOPT_COOKIEJAR, $param[4]);
-            curl_setopt(self::$curl, CURLOPT_COOKIEFILE, $param[4]); //使用上面获取的cookies
+            /*curl_setopt(self::$curl, CURLOPT_COOKIEJAR, $param[4]);
+            curl_setopt(self::$curl, CURLOPT_COOKIEFILE, $param[4]); //使用上面获取的cookies*/
         }
 
         switch (strtolower($name)) {

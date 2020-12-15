@@ -24,7 +24,7 @@ class SendMsgService
             ]
         ];
 
-        $dd = 'https://oapi.dingtalk.com/robot/send?access_token=532c9e7886fcfa6454b12d6443c7625f20ffbab979efc902cc3805d02bf1f25b';
+        $dd = 'https://oapi.dingtalk.com/robot/send?access_token=b7ba86418cd10fe93b2c64fcf472876835ebc8ce155f28d353423dd776126710';
         $this->sendUrl($dd,json_encode($msg));
     }
 
