@@ -17,6 +17,15 @@ class StrService
     }
 
     /**
+     * 订单号生成
+     */
+    public static function orderNo(){
+
+        $osn = date('YmdHis').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+        return $osn;
+    }
+    
+    /**
      * 无线级分类
      * @param $data
      * @param string $pField 父级字段名
