@@ -6,7 +6,7 @@ namespace Curl\SendMsg;
 
 class SendMsgService
 {
-    public function sendDDMsg($content){
+    public function sendDDMsg($content,$url){
 
 
         $msg = [
@@ -24,8 +24,8 @@ class SendMsgService
             ]
         ];
 
-        $dd = 'https://oapi.dingtalk.com/robot/send?access_token=b7ba86418cd10fe93b2c64fcf472876835ebc8ce155f28d353423dd776126710';
-        $this->sendUrl($dd,json_encode($msg));
+
+        $this->sendUrl($url,json_encode($msg));
     }
 
     private function sendUrl($remote_server, $post_string)
