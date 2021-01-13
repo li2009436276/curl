@@ -19,4 +19,14 @@ class DateService
         $days = $datetimeStart->diff($datetimeEnd)->days;
         return $days;
     }
+
+    /**
+     * 获取毫秒时间戳
+     * @return int
+     */
+    public static function mtime() {
+
+        $times = explode(' ',microtime());
+        return intval(($times[1]+ $times[0])*1000);
+    }
 }
