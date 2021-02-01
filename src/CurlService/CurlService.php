@@ -85,7 +85,6 @@ class CurlService
 
             $data = json_encode($data);
         }
-
         curl_setopt(self::$curl, CURLOPT_POSTFIELDS, $data);
         return self::finish();
     }
