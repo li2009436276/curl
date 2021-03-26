@@ -102,7 +102,7 @@ class CurlService
             $output = json_decode($output,true);
         }
 
-
+        self::close();
         return $output;
     }
 
@@ -111,5 +111,6 @@ class CurlService
      */
     static function close(){
         curl_close(self::$curl);
+        self::$curl = null;
     }
 }
