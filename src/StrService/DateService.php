@@ -29,4 +29,15 @@ class DateService
         $times = explode(' ',microtime());
         return intval(($times[1]+ $times[0])*1000);
     }
+
+    /**
+     * 数字转时间
+     * @param $numeral
+     * @return false|string
+     */
+    public static function numeralToTime($numeral) {
+
+        preg_match('/\d{10}/',$numeral,$matches);
+        return date('Y-m-d',$matches[0]);
+    }
 }
