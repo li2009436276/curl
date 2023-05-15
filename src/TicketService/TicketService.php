@@ -23,6 +23,8 @@ class TicketService
             $data['is_admin'] = 1;
         }
 
+        unset($data['pwd'],$data['password'],$data['salt']);
+
         $ticket = str_random(32);
 
         Cache::put($ticket,$data,env('SESSION_LIFETIME'));
