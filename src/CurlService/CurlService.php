@@ -56,7 +56,7 @@ class CurlService
         }
 
         switch (strtolower($name)) {
-            case 'get': return self::getReq();
+            case 'get': return self::getReq( $param[1] );
             case 'post': return self::postReq(!empty($param[1]) ? $param[1] : []);
         }
 
@@ -66,8 +66,12 @@ class CurlService
      * get提交
      * @return mixed
      */
-    static function getReq(){
+    static function getReq($data = null){
 
+        if ($data) {
+
+            self::$curl = self::$curl.'?'.http_build_query($data);
+        }
        return self::finish();
     }
 
