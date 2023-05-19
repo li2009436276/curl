@@ -17,6 +17,16 @@ class StrService
     }
 
     /**
+     * 随机生成6位数字符串，可能重复
+     * @param int $length
+     */
+    public static function randNumberStr($length = 6){
+
+        $strs="1234567890";
+        return substr(str_shuffle($strs),mt_rand(0,strlen($strs)-$length-1),$length);
+    }
+
+    /**
      * 订单号生成
      */
     public static function orderNo(){
