@@ -32,7 +32,7 @@ class CurlService
 
         self::$returnType = empty($param[3]) ? 1 : 0;
 
-        curl_setopt(self::$curl, CURLOPT_URL, $param[0]);
+
 
         //https请求
         if(substr($param[0],0,5) == 'https'){
@@ -71,7 +71,9 @@ class CurlService
 
         if (!empty($data)) {
 
-            self::$curl = self::$curl.'?'.http_build_query($data);
+            self::$url = self::$url.'?'.http_build_query($data);
+
+            curl_setopt(self::$curl, CURLOPT_URL, self::$url);
         }
        return self::finish();
     }
@@ -90,6 +92,8 @@ class CurlService
 
             $data = json_encode($data);
         }
+
+        curl_setopt(self::$curl, CURLOPT_URL, self::$url);
         curl_setopt(self::$curl, CURLOPT_POSTFIELDS, $data);
         return self::finish();
     }
