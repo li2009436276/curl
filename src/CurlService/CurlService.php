@@ -34,7 +34,7 @@ class CurlService
 
         self::$returnType = empty($param[3]) ? 1 : 0;
 
-
+        self::$url = $param[0];
 
         //https请求
         if(substr($param[0],0,5) == 'https'){
