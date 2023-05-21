@@ -12,6 +12,8 @@ class CurlService
     static $returnType = 1; //1返回json格式，0返回原数据，
     static $headers = [];
 
+    static $url = '';
+
     public static function getInstance(){
 
         if (!self::$curl) {
