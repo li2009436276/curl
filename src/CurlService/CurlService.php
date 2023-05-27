@@ -75,9 +75,8 @@ class CurlService
 
             self::$url = self::$url.'?'.http_build_query($data);
 
-            curl_setopt(self::$curl, CURLOPT_URL, self::$url);
         }
-       return self::finish();
+        return self::finish();
     }
 
     /**
@@ -95,7 +94,6 @@ class CurlService
             $data = json_encode($data);
         }
 
-        curl_setopt(self::$curl, CURLOPT_URL, self::$url);
         curl_setopt(self::$curl, CURLOPT_POSTFIELDS, $data);
         return self::finish();
     }
@@ -105,6 +103,8 @@ class CurlService
      * @return mixed
      */
     static function finish(){
+
+        curl_setopt(self::$curl, CURLOPT_URL, self::$url);
 
         $output = curl_exec(self::$curl);
 
