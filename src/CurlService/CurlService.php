@@ -12,8 +12,6 @@ class CurlService
     static $returnType = 1; //1返回json格式，0返回原数据，
     static $headers = [];
 
-    static $url = '';
-
     public static function getInstance(){
 
         if (!self::$curl) {
@@ -34,7 +32,7 @@ class CurlService
 
         self::$returnType = empty($param[3]) ? 1 : 0;
 
-        self::$url = $param[0];
+        curl_setopt(self::$curl, CURLOPT_URL, $param[0]);
 
         //https请求
         if(substr($param[0],0,5) == 'https'){
@@ -57,10 +55,10 @@ class CurlService
             curl_setopt(self::$curl, CURLOPT_COOKIEFILE, $param[4]); //使用上面获取的cookies
         }
 
-        $requestData =  !empty($param[1]) ? $param[1] : [];
         switch (strtolower($name)) {
-            case 'get': return self::getReq($requestData );
-            case 'post': return self::postReq($requestData);
+            case 'get': return self::getReq();
+            case 'post': return self::postReq(!empty($param[1]) ? $param[1] : []);
+            case 'delete': return self::deleteReq();
         }
 
     }
@@ -69,14 +67,9 @@ class CurlService
      * get提交
      * @return mixed
      */
-    static function getReq($data = []){
+    static function getReq(){
 
-        if (!empty($data)) {
-
-            self::$url = self::$url.'?'.http_build_query($data);
-
-        }
-        return self::finish();
+       return self::finish();
     }
 
     /**
@@ -93,8 +86,20 @@ class CurlService
 
             $data = json_encode($data);
         }
-
         curl_setopt(self::$curl, CURLOPT_POSTFIELDS, $data);
+        return self::finish();
+    }
+
+    /**
+     * post提交
+     * @param $data
+     * @return mixed
+     */
+    static function deleteReq($data = []){
+
+        curl_setopt (self::$curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+        curl_setopt(self::$curl, CURLOPT_POSTFIELDS,$data);
+
         return self::finish();
     }
 
@@ -103,8 +108,6 @@ class CurlService
      * @return mixed
      */
     static function finish(){
-
-        curl_setopt(self::$curl, CURLOPT_URL, self::$url);
 
         $output = curl_exec(self::$curl);
 
