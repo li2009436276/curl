@@ -118,6 +118,8 @@ class CurlService
      */
     static function finish(){
 
+        curl_setopt(self::$curl, CURLOPT_URL, self::$url);
+
         $output = curl_exec(self::$curl);
 
         if (self::$returnType) {
