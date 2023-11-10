@@ -12,6 +12,8 @@ class CurlService
     static $returnType = 1; //1返回json格式，0返回原数据，
     static $headers = [];
 
+    static $cur = '';
+
     public static function getInstance(){
 
         if (!self::$curl) {
@@ -29,6 +31,9 @@ class CurlService
     static function __callStatic($name,$param){
 
         self::getInstance();
+
+        self::$url = $param[0];
+
 
         self::$returnType = empty($param[3]) ? 1 : 0;
 
