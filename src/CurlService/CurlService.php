@@ -54,11 +54,11 @@ class CurlService
             curl_setopt(self::$curl, CURLOPT_COOKIEJAR, $param[4]);
             curl_setopt(self::$curl, CURLOPT_COOKIEFILE, $param[4]); //使用上面获取的cookies
         }
-
+        $requestData =  !empty($param[1]) ? $param[1] : [];
         switch (strtolower($name)) {
-            case 'get': return self::getReq();
-            case 'post': return self::postReq(!empty($param[1]) ? $param[1] : []);
-            case 'delete': return self::deleteReq();
+            case 'get': return self::getReq($requestData);
+            case 'post': return self::postReq($requestData);
+            case 'delete': return self::deleteReq($requestData);
         }
 
     }
@@ -67,8 +67,12 @@ class CurlService
      * get提交
      * @return mixed
      */
-    static function getReq(){
+    static function getReq($data){
+        if (!empty($data)) {
 
+            self::$url = self::$url.'?'.http_build_query($data);
+
+        }
        return self::finish();
     }
 
