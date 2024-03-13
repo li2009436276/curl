@@ -122,6 +122,11 @@ class CurlService
 
         $output = curl_exec(self::$curl);
 
+        if (self::$headers && !empty(self::$headers['Accept-Encoding']) && strpos(self::$headers['Accept-Encoding'],'gzip')) {
+
+            $output = gzdecode($output);
+        }
+
         if (self::$returnType) {
 
             $output = json_decode($output,true);
