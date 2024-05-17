@@ -6,13 +6,43 @@ namespace Curl\SendMsg;
 
 class SendMsgService
 {
-    public function sendDDMsg($content,$url,$msgtype = 'text'){
+    public function sendDDMsg($content,$url){
 
 
         $msg = [
-            'msgtype' => $msgtype,
+            'msgtype' => 'text',
             'text' => [
                 "content" => $content
+            ],
+            'at' => [
+                /*'atMobiles' => [
+                    "156xxxx8827",
+                    "189xxxx8325"
+                ],*/
+                'isAtAll' => true
+
+            ]
+        ];
+
+
+        $this->sendUrl($url,json_encode($msg));
+    }
+
+    /**
+     * 发送markdown消息
+     * @param $title
+     * @param $message
+     * @param $url
+     * @return void
+     */
+    public function sendDDMsgMarkdown($title,$message,$url){
+
+
+        $msg = [
+            'msgtype' => 'markdown',
+            'markdown' => [
+                'title'=> $title,
+                "text" => $message
             ],
             'at' => [
                 /*'atMobiles' => [
