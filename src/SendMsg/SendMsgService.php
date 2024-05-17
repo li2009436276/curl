@@ -6,11 +6,11 @@ namespace Curl\SendMsg;
 
 class SendMsgService
 {
-    public function sendDDMsg($content,$url){
+    public function sendDDMsg($content,$url,$msgtype = 'text'){
 
 
         $msg = [
-            'msgtype' => 'text',
+            'msgtype' => $msgtype,
             'text' => [
                 "content" => $content
             ],
