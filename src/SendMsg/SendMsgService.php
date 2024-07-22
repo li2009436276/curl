@@ -3,77 +3,66 @@
 
 namespace Curl\SendMsg;
 
+use AlibabaCloud\SDK\Dingtalk\Vrobot_1_0\Dingtalk;
+use AlibabaCloud\Tea\Exception\TeaError;
+use AlibabaCloud\Tea\Utils\Utils;
 
-class SendMsgService
+use Darabonba\OpenApi\Models\Config;
+use AlibabaCloud\SDK\Dingtalk\Vrobot_1_0\Models\OrgGroupSendHeaders;
+use AlibabaCloud\SDK\Dingtalk\Vrobot_1_0\Models\OrgGroupSendRequest;
+use AlibabaCloud\Tea\Utils\Utils\RuntimeOptions;
+
+class SendMsgService extends MessageParentService
 {
-    public function sendDDMsg($content,$url){
 
+    /**
+     * 发送API消息
+     * @return void
+     */
+    public function sendDingtalkApiMsg($content,$msgKey = 'sampleText',$webHookAccessToken = null) {
 
-        $msg = [
-            'msgtype' => 'text',
-            'text' => [
-                "content" => $content
-            ],
-            'at' => [
-                /*'atMobiles' => [
-                    "156xxxx8827",
-                    "189xxxx8325"
-                ],*/
-                'isAtAll' => true
+        $accessToken = $this->getAccessToken();
+        if ($accessToken){
+           
+            $param = [
+                "msgParam" => json_encode(['content'=>$content]),
+                "msgKey" => $msgKey,
+                "token" => $webHookAccessToken ? : "88ef308672e079ae13f6875de97398b350c7cc79ba6234441921e03bcc1330e0"
+            ];
 
-            ]
-        ];
+            $client = $this->createClient();
+            $orgGroupSendHeaders = new OrgGroupSendHeaders([]);
+            $orgGroupSendHeaders->xAcsDingtalkAccessToken = $accessToken;
+            $orgGroupSendRequest = new OrgGroupSendRequest(
+                $param
+            );
+            try {
 
+                $res = $client->orgGroupSendWithOptions($orgGroupSendRequest, $orgGroupSendHeaders, new RuntimeOptions([]));
 
-        $this->sendUrl($url,json_encode($msg));
+            } catch (Exception $err) {
+                if (!($err instanceof TeaError)) {
+                    $err = new TeaError([], $err->getMessage(), $err->getCode(), $err);
+                }
+                if (!Utils::empty_($err->code) && !Utils::empty_($err->message)) {
+                    // err 中含有 code 和 message 属性，可帮助开发定位问题
+                }
+            }
+        }
+        
+        
     }
 
     /**
-     * 发送markdown消息
-     * @param $title
-     * @param $message
-     * @param $url
-     * @return void
+     * 使用 Token 初始化账号Client
+     * @return Dingtalk Client
      */
-    public function sendDDMsgMarkdown($title,$message,$url){
+    protected function createClient(){
 
-
-        $msg = [
-            'msgtype' => 'markdown',
-            'markdown' => [
-                'title'=> $title,
-                "text" => $message
-            ],
-            'at' => [
-                /*'atMobiles' => [
-                    "156xxxx8827",
-                    "189xxxx8325"
-                ],*/
-                'isAtAll' => true
-
-            ]
-        ];
-
-
-        $this->sendUrl($url,json_encode($msg));
+        $config = new Config([]);
+        $config->protocol = "https";
+        $config->regionId = "central";
+        return new Dingtalk($config);
     }
 
-    private function sendUrl($remote_server, $post_string)
-    {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $remote_server);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json;charset=utf-8'));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // 不用开启curl证书验证
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        $data = curl_exec($ch);
-        //$info = curl_getinfo($ch);
-        //var_dump($info);
-        curl_close($ch);
-        return $data;
-    }
 }
