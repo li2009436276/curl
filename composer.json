@@ -10,7 +10,9 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+        "alibabacloud/dingtalk": "*"
+    },
     "autoload": {
       "psr-4": {
         "Curl\\": "src"
