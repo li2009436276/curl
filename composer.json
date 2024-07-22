@@ -11,7 +11,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "alibabacloud/dingtalk": "*"
+        "alibabacloud/dingtalk": "dev-master"
     },
     "autoload": {
       "psr-4": {
