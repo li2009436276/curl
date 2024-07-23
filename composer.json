@@ -14,5 +14,8 @@
       "psr-4": {
         "Curl\\": "src"
       }
+    },
+    "require": {
+        "alibabacloud/dingtalk": "dev-master"
     }
 }
