@@ -81,7 +81,7 @@ class MessageParentService
                 $res = $client->getAccessToken($getAccessTokenRequest);
                 if ($res && !empty($res->body)) {
 
-                    Cache::put('dingTalk:application:access:token',$res->body->accessToken,7200);
+                    Cache::put('dingTalk:application:access:token',$res->body->accessToken,120);
                     return $res->body->accessToken;
                 }
             }catch (\Exception $err) {
