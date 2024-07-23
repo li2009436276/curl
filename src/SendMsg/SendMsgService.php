@@ -19,7 +19,7 @@ class SendMsgService extends MessageParentService
      * 发送API消息
      * @return void
      */
-    public function sendDingtalkApiMsg($title,$content,$msgKey = 'sampleText',$webHookAccessToken = null) {
+    public function sendDingtalkApiMsg($title,$content,$msgKey = 'sampleMarkdown',$webHookAccessToken = null) {
 
         $accessToken = $this->getAccessToken();
         if ($accessToken){
